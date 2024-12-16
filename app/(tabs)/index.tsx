@@ -14,39 +14,53 @@ export default function App() {
     const handleNumberInput = (num:any) => {
         if (displayValue === '0') {
             setDisplayValue(num.toString());
+            handleExpInput(num);
         } else {
-            const value = [displayValue];
-            value.push(num);
-            console.log(value);
-            setDisplayExpValue(value.toString());
             setDisplayValue(displayValue + num);
-            
+            handleExpInput(num);
+            console.log("value", displayExpValue);
         }
     };
     
-    
+    const handleExpInput = (num: any) => {
+        if (displayExpValue === '0') {
+            setDisplayExpValue(num.toString());
+        }
+        else {
+            const value = [displayExpValue];
+             value.push(num);
+            setDisplayExpValue(value.join(' '));
+        }
+         
+        
+     }
     
     const handleOperatorInput = (operator:any) => {
         setOperator(operator);
         setFirstValue(displayValue);
         setDisplayValue('0');
+        handleExpInput(operator);
     };
 
     
     const handleEqual = () => {
         const num1 = parseFloat(firstValue);
         const num2 = parseFloat(displayValue);
-
+        
         if (operator === '+') {
             setDisplayValue((num1 + num2).toString());
+            
         } else if (operator === '-') {
             setDisplayValue((num1 - num2).toString());
+            
         } else if (operator === '*') {
             setDisplayValue((num1 * num2).toString());
+            
         } else if (operator === '/') {
             setDisplayValue((num1 / num2).toString());
+            
         }
-
+        
         setOperator(null);
         setFirstValue('');
     };
@@ -54,6 +68,7 @@ export default function App() {
     
     const handleClear = () => {
         setDisplayValue('0');
+        setDisplayExpValue('0');
         setOperator(null);
         setFirstValue('');
     };
